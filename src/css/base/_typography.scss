@@ -1,0 +1,41 @@
+// Typography
+
+// EXAMPLE FONT MIXIN
+// @mixin f-futura-pt-reg {
+// 	font : {
+// 		family: 'futura-pt', sans-serif;
+// 		weight: 900;
+// 		style: normal;
+// 	}
+// }
+
+// General typography
+// Setting default font size for rem
+html {
+	font-size: 62.5%;
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	margin: 0;
+
+	font-weight: normal;
+}

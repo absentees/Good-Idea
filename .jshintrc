@@ -1,0 +1,19 @@
+{
+	"strict": "implied",
+	"unused": true,
+	"curly": true,
+	"eqeqeq": true,
+	"esversion": 6,
+	"futurehostile": true,
+	"nonbsp": true,
+	"nonew": true,
+	"undef": true,
+	"globals": {
+		"$": false,
+		"require": false,
+		"document": false,
+		"window": false,
+		"module": false,
+		"console": false
+	}
+}

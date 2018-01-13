@@ -1,0 +1,74 @@
+// inline-block list
+@mixin inline-block-list($padding: false) {
+	margin: 0;
+  	padding: 0;
+  	border: 0;
+  	@include clearfix;
+
+  	li {
+  		list-style-type: none;
+  		@include inline-block();
+  		white-space: nowrap;
+  		@if $padding {
+    		padding: {
+      			left: $padding;
+      			right: $padding;
+    		};
+  		}
+  	}
+}
+
+@mixin omega-reset($nth) {
+  &:nth-child(#{$nth}) { margin-right: flex-gutter(); }
+  &:nth-child(#{$nth}+1) { clear: none }
+}
+
+// inline-block for old browsers
+@mixin inline-block() {
+  display: inline-block;
+	*zoom: 1;
+  *display: inline;
+}
+
+@mixin reset-box-model {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+@mixin absolute-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@mixin headings($from: 1, $to: 6){
+  @for $i from $from through $to{
+    h#{$i}{
+     @content
+    }
+  }
+}
+
+@mixin background-image($path) {
+  background-image: url(../img/#{$path}.png);
+  background-image: linear-gradient(transparent, transparent), url(../img/#{$path}.svg);
+}
+
+/* Reset unordered list style */
+@mixin reset-ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: auto;
+}
+
+@mixin hide-text {
+  overflow: hidden;
+  text-indent: 101%;
+  white-space: nowrap;
+}
+
+
