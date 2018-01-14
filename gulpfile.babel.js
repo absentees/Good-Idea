@@ -28,55 +28,6 @@ const staticSrc = 'src/**/*.{eot,ttf,woff,woff2,otf,pdf,txt,html}';
 
 const dist = 'dist/';
 
-/* Configure Nunjucks */
-var nunjucks = require('nunjucks');
-var nunjucksEnv = nunjucks.configure('./src/html/views', {
-	watch: false,
-	throwOnUndefined: false,
-	noCache: true
-});
-/* Enable Mardown parseing */
-var markdown = require('nunjucks-markdown');
-var marked = require('marked');
-markdown.register(nunjucksEnv, marked);
-
-// Handlebar helpers for revisioned asset paths and content
-const handlebarOpts = {
-	ignorePartials: true,
-	batch: ['./src/partials'],
-	helpers: {
-		cssPath(path, context) {
-			if (envProd) {
-				return ['css', context.data.root[path]].join('/');
-			} else {
-				return 'css/' + path;
-			}
-		},
-		jsPath(path, context) {
-			if (envProd) {
-				return ['js', context.data.root[path]].join('/');
-			} else {
-				return 'js/' + path;
-			}
-		},
-		pTags(content) {
-			var output = '';
-			var lines = content.split(/\r\n|\r|\n/g);
-
-			for (var i = 0; i < lines.length; i++) {
-				if (lines[i]) {
-					output += '<p>' + lines[i] + '</p>';
-				}
-			}
-
-			return output;
-		},
-		lowerCaseNoSpace(content) {
-			return content.replace(/ /g, '-').toLowerCase(); // Removes all whitespace and sets to lower case
-		}
-	}
-};
-
 // Clean
 gulp.task('clean', () => {
 	return rimraf.sync('dist');
@@ -94,10 +45,19 @@ gulp.task('copy', () => {
 });
 
 
-gulp.task('html', () => {
-	return gulp.src('**/*.html', {
-		base: 'src/html'
-	}).pipe(gulp.dest(dist));
+
+// Compile Partials
+gulp.task('html', function() {
+	gulp.src(['src/*.html'])
+		.pipe($.fileInclude({
+			prefix: '@@',
+			basepath: 'src/partials/'
+		}))
+		.pipe($.htmlmin({
+		// Editable - see https://www.npmjs.com/package/gulp-minify-html#options for details
+			minifyJS: true
+		}))
+		.pipe(gulp.dest('dist/'));
 });
 
 
